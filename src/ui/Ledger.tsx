@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { BRAND } from '@/brand'
 import type { Config, OptionKey } from '@/data/catalog'
 import {
@@ -79,9 +79,11 @@ function Row({
 }) {
   const panel = useId()
   const ref = useRef<HTMLElement>(null)
-  // bring a newly opened row to the top of the ledger so its options are visible
+  // desktop: bring a newly opened row to the top of the ledger so its options are visible.
+  // Mobile (stacked layout) never scrolls on its own; the customer stays where they are.
   useEffect(() => {
     if (!open || !ref.current) return
+    if (window.matchMedia('(max-width: 960px)').matches) return
     const el = ref.current
     const t = window.setTimeout(() => {
       const scroller = el.closest('.ledger__body') as HTMLElement | null
@@ -258,6 +260,54 @@ function Engraving() {
   )
 }
 
+/**
+ * Mobile (stacked layout): when a panel gets shorter near the bottom of the page,
+ * the browser would pull the page up to keep the scroll position valid. A spacer
+ * at the end of the ledger keeps the page just tall enough for where the customer
+ * is, and shrinks away again as they scroll up — so choosing an option never moves
+ * the page.
+ */
+function useHoldScroll(body: RefObject<HTMLElement | null>, spacer: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const b = body.current
+    const sp = spacer.current
+    if (!b || !sp) return
+    const mq = window.matchMedia('(max-width: 960px)')
+    const root = document.documentElement
+    let lastY = window.scrollY
+    let h = 0
+    const setSpacer = (v: number) => {
+      const next = Math.max(0, Math.ceil(v))
+      if (next !== h) {
+        h = next
+        sp.style.height = `${next}px`
+      }
+    }
+    // how much taller the page must be for lastY to stay a valid scroll position
+    const shortfall = () => lastY + root.clientHeight - (root.scrollHeight - h)
+    const onResize = () => {
+      if (!mq.matches) return setSpacer(0)
+      setSpacer(shortfall())
+      // runs after layout and before paint, so a clamped position is put back unseen
+      if (Math.abs(window.scrollY - lastY) > 1) window.scrollTo({ top: lastY, behavior: 'instant' })
+    }
+    const onScroll = () => {
+      lastY = window.scrollY
+      if (h > 0) setSpacer(mq.matches ? shortfall() : 0)
+    }
+    const ro = new ResizeObserver(onResize)
+    ro.observe(b)
+    // the foot (price breakdown) changes height too
+    if (b.parentElement) ro.observe(b.parentElement)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      sp.style.height = '0px'
+    }
+  }, [body, spacer])
+}
+
 export { ROW_FOCUS }
 export type { RowId }
 
@@ -267,6 +317,9 @@ export function Ledger({ onAdd, onShare, adding }: { onAdd: () => void; onShare:
   const setOpenRow = useConfig((s) => s.setOpenRow)
   const { book, status, load } = usePricing()
   const [showBreakdown, setShowBreakdown] = useState(false)
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const spacerRef = useRef<HTMLDivElement>(null)
+  useHoldScroll(bodyRef, spacerRef)
 
   useEffect(() => {
     void load()
@@ -288,7 +341,7 @@ export function Ledger({ onAdd, onShare, adding }: { onAdd: () => void; onShare:
 
   return (
     <aside className="cfg__ledger" aria-label="Configuration">
-      <div className="ledger__body">
+      <div className="ledger__body" ref={bodyRef}>
         <Row id="body" label="Body" value={optionName('body', cfg.body)} price={p('body')} open={open === 'body'} onToggle={toggle}>
           <Options k="body" list={BODIES} />
         </Row>
@@ -333,6 +386,7 @@ export function Ledger({ onAdd, onShare, adding }: { onAdd: () => void; onShare:
         <p className="demo-note demo-note--body">
           A portfolio project by <AuthorLink />. {BRAND.name} is fictional; nothing is sold.
         </p>
+        <div ref={spacerRef} aria-hidden />
       </div>
 
       <div className="ledger__foot">
