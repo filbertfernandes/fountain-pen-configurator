@@ -1,9 +1,9 @@
 {
-  "name": "wheeler-rawson-configurator",
+  "name": "fountain-pen-configurator",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Wheeler & Rawson — Meridian fountain pen 3D configurator (Three.js / React Three Fiber)",
+  "description": "Fountain Pen Configurator (Three.js / React Three Fiber)",
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json && vite build",
