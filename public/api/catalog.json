@@ -1,0 +1,17 @@
+{
+  "product": "WR-MER9",
+  "currency": "USD",
+  "updatedAt": "2026-10-01T09:00:00Z",
+  "base": 395,
+  "options": {
+    "body": { "midnight": 0, "oxblood": 0, "verdigris": 0, "tortoise": 40, "ebonite": 0, "brushed": 85, "carbon": 120, "crystal": 30 },
+    "trim": { "gold": 0, "palladium": 0, "rose": 25, "noir": 35 },
+    "clip": { "wheel": 45, "classic": 0, "minimal": 0 },
+    "nibMaterial": { "steel": 0, "twotone": 60, "gold18": 220 },
+    "nibSize": { "EF": 0, "F": 0, "M": 0, "B": 0 },
+    "fill": { "converter": 15, "cartridge": 0 },
+    "ink": { "blueblack": 0, "royal": 0, "oxblood": 0, "emerald": 0, "jet": 0 },
+    "case": { "none": 0, "sleeve": 45, "walnut": 90 }
+  },
+  "engraving": 35
+}

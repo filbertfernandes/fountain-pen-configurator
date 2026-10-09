@@ -1,0 +1,10 @@
+node_modules
+dist
+*.local
+.DS_Store
+Thumbs.db
+blender/*.blend1
+blender/renders/
+.vscode/*
+!.vscode/extensions.json
+blender/export/
