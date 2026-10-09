@@ -9,7 +9,6 @@ import {
   NIB_SIZES,
   FILLS,
   INKS,
-  CASES,
   FONTS,
   ENGRAVE_COLORS,
   GROUP_LABELS,
@@ -22,7 +21,7 @@ import { useConfig } from '@/state/configStore'
 import { IconChevron, ClipGlyph, FillGlyph, IconLink } from './icons'
 import { AuthorLink } from './Nav'
 
-type RowId = 'body' | 'trim' | 'clip' | 'nib' | 'fill' | 'ink' | 'engraving' | 'case'
+type RowId = 'body' | 'trim' | 'clip' | 'nib' | 'fill' | 'ink' | 'engraving'
 
 const ROW_FOCUS: Record<RowId, OptionKey | 'engraving'> = {
   body: 'body',
@@ -32,7 +31,6 @@ const ROW_FOCUS: Record<RowId, OptionKey | 'engraving'> = {
   fill: 'fill',
   ink: 'ink',
   engraving: 'engraving',
-  case: 'case',
 }
 
 function useAnimatedNumber(value: number, ms = 450) {
@@ -331,9 +329,6 @@ export function Ledger({ onAdd, onShare, adding }: { onAdd: () => void; onShare:
           onToggle={toggle}
         >
           <Engraving />
-        </Row>
-        <Row id="case" label="Presentation" value={optionName('case', cfg.case)} price={p('case')} open={open === 'case'} onToggle={toggle}>
-          <Options k="case" list={CASES} layout="list" />
         </Row>
         <p className="demo-note demo-note--body">
           A portfolio project by <AuthorLink />. {BRAND.name} is fictional; nothing is sold.

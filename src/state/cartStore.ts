@@ -115,7 +115,6 @@ export function lineProperties(c: Config): { name: string; value: string }[] {
     { name: GROUP_LABELS.nibMaterial, value: `${optionName('nibMaterial', c.nibMaterial)}, ${optionName('nibSize', c.nibSize)}` },
     { name: GROUP_LABELS.fill, value: optionName('fill', c.fill) },
     { name: GROUP_LABELS.ink, value: optionName('ink', c.ink) },
-    { name: GROUP_LABELS.case, value: optionName('case', c.case) },
   ]
   if (c.engraving.text.trim()) {
     props.push({

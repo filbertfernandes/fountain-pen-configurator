@@ -14,7 +14,6 @@ export type FillId = 'converter' | 'cartridge'
 export type InkId = 'blueblack' | 'royal' | 'oxblood' | 'emerald' | 'jet'
 export type FontId = 'caslon' | 'script' | 'roman'
 export type EngraveColorId = 'match' | 'gold' | 'silver' | 'white' | 'black' | 'vermilion'
-export type CaseId = 'none' | 'sleeve' | 'walnut'
 
 export interface Engraving {
   text: string
@@ -32,7 +31,6 @@ export interface Config {
   fill: FillId
   ink: InkId
   engraving: Engraving
-  case: CaseId
 }
 
 export type OptionKey = Exclude<keyof Config, 'engraving'>
@@ -53,7 +51,6 @@ export const DEFAULT_CONFIG: Config = {
   fill: 'converter',
   ink: 'blueblack',
   engraving: { text: '', font: 'caslon', color: 'match' },
-  case: 'none',
 }
 
 export const BODIES: OptionDef<BodyId>[] = [
@@ -164,12 +161,6 @@ export const ENGRAVE_COLORS: (OptionDef<EngraveColorId> & { css: string; metal: 
   { id: 'vermilion', name: 'Vermilion', note: 'The red of the workshop ledgers.', swatch: '#b8352e', css: '#a8302a', metal: false, hex: '#b8352e' },
 ]
 
-export const CASES: OptionDef<CaseId>[] = [
-  { id: 'none', name: 'Pen pouch', note: 'A cotton pouch and a box of six cartridges.', swatch: '' },
-  { id: 'sleeve', name: 'Leather sleeve', note: 'Vegetable-tanned leather, stitched by hand.', swatch: '' },
-  { id: 'walnut', name: 'Walnut presentation box', note: 'Solid walnut with a brass catch and a bottle of ink.', swatch: '' },
-]
-
 export const OPTIONS = {
   body: BODIES,
   trim: TRIMS,
@@ -178,7 +169,6 @@ export const OPTIONS = {
   nibSize: NIB_SIZES,
   fill: FILLS,
   ink: INKS,
-  case: CASES,
 } as const
 
 export const GROUP_LABELS: Record<OptionKey, string> = {
@@ -189,7 +179,6 @@ export const GROUP_LABELS: Record<OptionKey, string> = {
   nibSize: 'Nib width',
   fill: 'Filling system',
   ink: 'Ink',
-  case: 'Presentation',
 }
 
 export function optionName<K extends OptionKey>(key: K, id: Config[K]): string {

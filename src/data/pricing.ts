@@ -44,7 +44,7 @@ export const usePricing = create<PricingState>((set, get) => ({
   },
 }))
 
-const ORDER: OptionKey[] = ['body', 'trim', 'clip', 'nibMaterial', 'nibSize', 'fill', 'ink', 'case']
+const ORDER: OptionKey[] = ['body', 'trim', 'clip', 'nibMaterial', 'nibSize', 'fill', 'ink']
 
 export function priceLines(cfg: Config, book: PriceBook): PriceLine[] {
   const lines: PriceLine[] = [{ key: 'base', label: BRAND.product.name, value: 'Pen', amount: book.base }]

@@ -14,7 +14,6 @@ const KEYS = {
   nibSize: 'w',
   fill: 'fill',
   ink: 'ink',
-  case: 'case',
 } as const
 
 export function encodeConfig(c: Config): string {

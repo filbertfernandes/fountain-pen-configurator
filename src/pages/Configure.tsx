@@ -25,7 +25,6 @@ const FOCUS_REGION: Record<string, FocusRegion> = {
   fill: 'all',
   ink: 'all',
   engraving: 'engraving',
-  case: 'all',
 }
 
 const MODES: { id: Mode; label: string }[] = [

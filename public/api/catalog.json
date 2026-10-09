@@ -10,8 +10,7 @@
     "nibMaterial": { "steel": 0, "twotone": 60, "gold18": 220 },
     "nibSize": { "EF": 0, "F": 0, "M": 0, "B": 0 },
     "fill": { "converter": 15, "cartridge": 0 },
-    "ink": { "blueblack": 0, "royal": 0, "oxblood": 0, "emerald": 0, "jet": 0 },
-    "case": { "none": 0, "sleeve": 45, "walnut": 90 }
+    "ink": { "blueblack": 0, "royal": 0, "oxblood": 0, "emerald": 0, "jet": 0 }
   },
   "engraving": 35
 }
